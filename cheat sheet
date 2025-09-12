@@ -1,0 +1,49 @@
+1. AW channel
+    AWVALID
+    AWREADY
+    AWADDR
+    AWSIZE - number of bytes to be transfered per transaction. 2**AWSIZE -> 1,2,4,16,64,128 (3 bits)
+    AWBURST- burst type: fixed, incr, wrapped
+    AWLEN  - specifies the length of transfers in a single transaction. AWLEN+1 -> no of transfers. AXI3 - 1 to 16, AXI4 - 1 to 256
+    AWID
+  
+2. W channel
+    WVALID
+    WREADY
+    WDATA
+    WLAST
+    WSTRB
+    WID
+
+3. B channel (write response channel):
+    BRESP
+    BVALID
+    BREADY
+    BID
+  a. B channel sends out a response only once for single or burst transactions. towards the end after the slave is done writing the WDATA
+
+4. AR channel
+    ARVALID
+    ARREADY
+    ARADDR
+    ARSIZE - 
+    ARBURST-
+    ARLEN  -
+    ARID
+  
+5. R channel:
+    RVALID
+    RDATA
+    RLAST
+    RREADY
+    RRESP
+    RID
+  a. during burst transfer the slave sends a RRESP for every data on RDATA on the same clock with valid
+
+6. Features:
+  a. Independent read and write
+  b. Multiple outstanding transactions are allowed
+  c. No strict timing relation between address and write/read channel
+  d. support for unaligned data transfers - starting address of a burst can be anywhere and not needed to aligned with natural address boundary
+  e. out of order transaction completion
+  f. burst transactions based on start address - master just sends out the starting address and type of burst. slave calculates the next address in a burst transaction
